@@ -62,6 +62,23 @@ class LeanWebClient {
       return NavigationDecision.prevent;
     }
 
+    // Baraka callback URLs are passed as success/failRedirectUrl markers, not
+    // real destinations. Firing the callback directly keeps the app foregrounded
+    // — bouncing through the OS deeplink system re-enters MainActivity and can
+    // hit unrelated deeplink handlers (CleverTap, router redirect) that send
+    // the user to the dashboard.
+    if (uri.scheme == 'app.getbaraka.com') {
+      LeanLogger.info(msg: 'Baraka callback URL intercepted: ${request.url}');
+      _redirectFired = true;
+      final action = uri.queryParameters['action'] ?? '';
+      final isSuccess = action.endsWith('_success');
+      callback?.call(LeanResponse(
+        status: isSuccess ? 'SUCCESS' : 'ERROR',
+        message: 'Link closed after redirect',
+      ));
+      return NavigationDecision.prevent;
+    }
+
     // External handoff:
     // When leaving the WebView (e.g., to Safari for Open Banking),
     // WKWebView suspends JavaScript immediately. Any callback
