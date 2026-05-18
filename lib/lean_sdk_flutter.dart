@@ -51,6 +51,7 @@ class Lean extends StatefulWidget {
   final String? granularStatusCode;
   final String? statusAdditionalInfo;
   final RiskDetails? riskDetails;
+  final VoidCallback? onPageFinished;
 
   //  ================    Extra params    =====================    //
 
@@ -65,6 +66,7 @@ class Lean extends StatefulWidget {
     this.callback,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -102,6 +104,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -138,6 +141,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -175,6 +179,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -212,6 +217,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -249,6 +255,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -288,6 +295,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -325,6 +333,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -360,6 +369,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -394,6 +404,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -430,6 +441,7 @@ class Lean extends StatefulWidget {
     this.accessToken,
     this.customization,
     this.actionCancelled,
+    this.onPageFinished,
     this.isSandbox = true,
     this.showLogs = false,
     this.version = 'latest',
@@ -656,6 +668,7 @@ class _LeanState extends State<Lean> {
               },
               onPageFinished: (String url) {
                 LeanLogger.info(msg: 'Lean SDK initialization completed.');
+                widget.onPageFinished?.call();
               },
               onNavigationRequest: (NavigationRequest request) {
                 return LeanWebClient.handleUrlOverride(
